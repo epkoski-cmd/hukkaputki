@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <!-- Tämä rivi saa sivun skaalautumaan oikein puhelimella -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hukkaputki – lähiöbaarit metron varrella</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Hukkaputki</h1>
+    <p class="tagline">Lähiöbaarit metron varrella. Jää pois, kävele hetki, löydä jotain uutta.</p>
+  </header>
+
+  <main>
+    <!-- Suodatinnapit. app.js täyttää tämän tagien perusteella. -->
+    <section class="filters" aria-label="Suodattimet">
+      <p class="filters-title">Mitä etsit?</p>
+      <div id="filter-buttons"></div>
+    </section>
+
+    <!-- Asemat ja niiden baarit. app.js täyttää tämän. -->
+    <section id="line" aria-label="Metroasemat"></section>
+  </main>
+
+  <footer>
+    <p>
+      Kävelyajat ovat arvioita linnuntien perusteella.
+      Arvosanat, kuvat ja aukioloajat löydät Google Mapsista.
+    </p>
+    <p>Sijaintitiedot: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-tekijät</a></p>
+  </footer>
+
+  <!-- Ensin data, sitten sovelluslogiikka -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
