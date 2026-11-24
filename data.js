@@ -14,13 +14,63 @@
 //   4) tiedot on tarkistettu
 
 // Asemat järjestyksessä Aalto-yliopistolta länteen.
+// Asemakuvat: Wikimedia Commons (CC BY-SA). Kuvaaja ja lisenssi
+// näytetään kuvan alla, kuten lisenssi vaatii.
 const ASEMAT = [
-  { id: "aalto",         nimi: "Aalto-yliopisto", linjat: "M1 · M2 · Raide-Jokeri 15", lat: 60.1844626, lon: 24.8235709 },
-  { id: "tapiola",       nimi: "Tapiola",         linjat: "M1 · M2", lat: 60.1750223, lon: 24.8038175 },
-  { id: "urheilupuisto", nimi: "Urheilupuisto",   linjat: "M1 · M2", lat: 60.1745591, lon: 24.7810824 },
-  { id: "niittykumpu",   nimi: "Niittykumpu",     linjat: "M1 · M2", lat: 60.1703645, lon: 24.7630169 },
-  { id: "matinkyla",     nimi: "Matinkylä",       linjat: "M1 · M2", lat: 60.15968,   lon: 24.7391256 },
-  { id: "finnoo",        nimi: "Finnoo",          linjat: "M1 · M2", lat: 60.1530493, lon: 24.7118863 },
+  { id: "aalto",         nimi: "Aalto-yliopisto", linjat: "M1 · M2 · Raide-Jokeri 15", lat: 60.1844626, lon: 24.8235709,
+    kuva: {
+      url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Aalto_University_metro_station_%28Nov_2017%29.jpg/960px-Aalto_University_metro_station_%28Nov_2017%29.jpg",
+      kuvaaja: "Markus Säynevirta",
+      lisenssi: "CC BY-SA 4.0",
+      lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      lahde: "https://commons.wikimedia.org/wiki/File:Aalto_University_metro_station_(Nov_2017).jpg",
+    },
+  },
+  { id: "tapiola",       nimi: "Tapiola",         linjat: "M1 · M2", lat: 60.1750223, lon: 24.8038175,
+    kuva: {
+      url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tapiola_metro_station_%28Nov_2017%29.jpg/960px-Tapiola_metro_station_%28Nov_2017%29.jpg",
+      kuvaaja: "Markus Säynevirta",
+      lisenssi: "CC BY-SA 4.0",
+      lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      lahde: "https://commons.wikimedia.org/wiki/File:Tapiola_metro_station_(Nov_2017).jpg",
+    },
+  },
+  { id: "urheilupuisto", nimi: "Urheilupuisto",   linjat: "M1 · M2", lat: 60.1745591, lon: 24.7810824,
+    kuva: {
+      url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Urheilupuisto_metro_station_entrance_%28January_2019%2C_2%29.jpg/960px-Urheilupuisto_metro_station_entrance_%28January_2019%2C_2%29.jpg",
+      kuvaaja: "Markus Säynevirta",
+      lisenssi: "CC BY-SA 4.0",
+      lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      lahde: "https://commons.wikimedia.org/wiki/File:Urheilupuisto_metro_station_entrance_(January_2019,_2).jpg",
+    },
+  },
+  { id: "niittykumpu",   nimi: "Niittykumpu",     linjat: "M1 · M2", lat: 60.1703645, lon: 24.7630169,
+    kuva: {
+      url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Niittykumpu_metro_station_%28March_2019%29.jpg/960px-Niittykumpu_metro_station_%28March_2019%29.jpg",
+      kuvaaja: "Markus Säynevirta",
+      lisenssi: "CC BY-SA 4.0",
+      lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      lahde: "https://commons.wikimedia.org/wiki/File:Niittykumpu_metro_station_(March_2019).jpg",
+    },
+  },
+  { id: "matinkyla",     nimi: "Matinkylä",       linjat: "M1 · M2", lat: 60.15968,   lon: 24.7391256,
+    kuva: {
+      url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Matinkyl%C3%A4_metro_station_%28Nov_2017%29.jpg/960px-Matinkyl%C3%A4_metro_station_%28Nov_2017%29.jpg",
+      kuvaaja: "Markus Säynevirta",
+      lisenssi: "CC BY-SA 4.0",
+      lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      lahde: "https://commons.wikimedia.org/wiki/File:Matinkyl%C3%A4_metro_station_(Nov_2017).jpg",
+    },
+  },
+  { id: "finnoo",        nimi: "Finnoo",          linjat: "M1 · M2", lat: 60.1530493, lon: 24.7118863,
+    kuva: {
+      url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Finnoo_metro_station.jpg/960px-Finnoo_metro_station.jpg",
+      kuvaaja: "JIP",
+      lisenssi: "CC BY-SA 4.0",
+      lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      lahde: "https://commons.wikimedia.org/wiki/File:Finnoo_metro_station.jpg",
+    },
+  },
 ];
 
 // Baarit. "asema" viittaa yllä olevan aseman id:hen.

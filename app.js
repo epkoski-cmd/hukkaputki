@@ -92,10 +92,78 @@ function sopiiSuodattimiin(baari) {
   return [...valitut].every((tagi) => baari.tagit.includes(tagi));
 }
 
+// ---------- Asemakuva ----------
+
+// Kuva ja sen alle kuvaaja + lisenssi (CC BY-SA vaatii nämä näkyviin).
+function asemaKuva(asema) {
+  const k = asema.kuva;
+  const kuva = document.createElement("figure");
+  kuva.className = "station-photo";
+  kuva.innerHTML = `
+    <img src="${k.url}" alt="Metroasema: ${asema.nimi}" loading="lazy" width="960" height="640">
+    <figcaption>
+      Kuva: <a href="${k.lahde}" target="_blank" rel="noopener">${k.kuvaaja}</a>,
+      <a href="${k.lisenssiUrl}" target="_blank" rel="noopener">${k.lisenssi}</a>
+    </figcaption>
+  `;
+  return kuva;
+}
+
+// ---------- Kartta ----------
+
+// Kaikki sivun kartat. Ne poistetaan ennen uudelleenpiirtoa,
+// muuten vanhat kartat jäisivät muistiin.
+let kartat = [];
+
+function asemaKartta(asema, baarit) {
+  const div = document.createElement("div");
+  div.className = "station-map";
+
+  // Leaflet tarvitsee div:n, joka on jo sivulla, joten kartta luodaan
+  // vasta kun osio on lisätty (ks. piirraLinja).
+  div.luoKartta = () => {
+    const kartta = L.map(div, {
+      scrollWheelZoom: false,          // ei zoomaa vahingossa sivua vierittäessä
+      dragging: !L.Browser.mobile,     // puhelimella sormi vierittää sivua, ei karttaa
+      tap: false,
+    });
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(kartta);
+
+    // Asema: iso oranssi pallo
+    L.circleMarker([asema.lat, asema.lon], {
+      radius: 9, color: "#fff", weight: 3, fillColor: "#ff6319", fillOpacity: 1,
+    }).addTo(kartta).bindPopup(`<strong>${asema.nimi}</strong><br>metroasema`);
+
+    // Baarit: tumma pallo, piilohelmet turkoosilla
+    for (const b of baarit) {
+      L.circleMarker([b.lat, b.lon], {
+        radius: 7, color: "#fff", weight: 2,
+        fillColor: b.piilohelmi ? "#1f6f78" : "#1d1d1b", fillOpacity: 1,
+      }).addTo(kartta).bindPopup(`<strong>${b.nimi}</strong><br>noin ${b.minuutit} min kävelyä`);
+    }
+
+    // Zoomataan niin, että asema ja kaikki baarit näkyvät
+    const pisteet = [[asema.lat, asema.lon], ...baarit.map((b) => [b.lat, b.lon])];
+    if (pisteet.length > 1) {
+      kartta.fitBounds(pisteet, { padding: [24, 24], maxZoom: 17 });
+    } else {
+      kartta.setView(pisteet[0], 16);
+    }
+    kartat.push(kartta);
+  };
+  return div;
+}
+
 // ---------- Asemat ja baarit ----------
 
 function piirraLinja() {
   const linja = document.getElementById("line");
+  kartat.forEach((k) => k.remove());
+  kartat = [];
   linja.innerHTML = ""; // tyhjennetään ja piirretään uudelleen
 
   for (const asema of ASEMAT) {
@@ -111,6 +179,14 @@ function piirraLinja() {
       <h2>${asema.nimi}</h2>
       <p class="station-meta">${asema.linjat}</p>
     `;
+
+    // Kuva ja kartta rinnakkain (tietokone) tai allekkain (puhelin)
+    const media = document.createElement("div");
+    media.className = "station-media";
+    if (asema.kuva) media.appendChild(asemaKuva(asema));
+    const karttaDiv = asemaKartta(asema, baarit);
+    media.appendChild(karttaDiv);
+    osio.appendChild(media);
 
     if (baarit.length === 0) {
       const tyhja = document.createElement("p");
@@ -129,6 +205,7 @@ function piirraLinja() {
     }
 
     linja.appendChild(osio);
+    karttaDiv.luoKartta(); // nyt div on sivulla, joten kartan voi luoda
   }
 }
 

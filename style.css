@@ -141,6 +141,39 @@ h1::before {           /* pieni oranssi M-merkki otsikon eteen */
   color: var(--muted);
 }
 
+/* ---------- Asemakuva ja kartta ---------- */
+.station-media {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.station-photo { margin: 0; }
+
+.station-photo img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;          /* rajaa kuvan siististi laatikkoon */
+  border-radius: 12px;
+  background: var(--line);
+}
+
+.station-photo figcaption {
+  margin-top: 4px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.station-photo figcaption a { color: inherit; }
+
+.station-map {
+  height: 200px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  z-index: 0;                 /* pysyy suodatinrivin alla vieritettäessä */
+}
+
 .empty {
   font-size: 0.9rem;
   color: var(--muted);
@@ -242,6 +275,10 @@ footer {
 @media (min-width: 700px) {
   h1 { font-size: 3rem; }
   .bars { grid-template-columns: 1fr 1fr; }
+
+  /* Kuva ja kartta vierekkäin */
+  .station-media { grid-template-columns: 1fr 1fr; }
+  .station-photo img, .station-map { height: 220px; }
 
   /* Tietokoneella napit saavat rivittyä usealle riville */
   #filter-buttons {

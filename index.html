@@ -5,6 +5,9 @@
   <!-- Tämä rivi saa sivun skaalautumaan oikein puhelimella -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hukkaputki – lähiöbaarit metron varrella</title>
+  <!-- Leaflet: ilmainen karttakirjasto. "integrity" varmistaa, että tiedosto on aito. -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -33,10 +36,13 @@
       💎 Piilohelmi = itsenäinen paikka, jossa on jotain erikoista ja joka ei
       ole ensimmäisenä silmien edessä.
     </p>
-    <p>Sijaintitiedot: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-tekijät</a></p>
+    <p>Sijaintitiedot ja kartat: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-tekijät</a>.
+      Asemakuvat: <a href="https://commons.wikimedia.org">Wikimedia Commons</a>, kuvaajat mainittu kuvien alla.</p>
   </footer>
 
-  <!-- Ensin data, sitten sovelluslogiikka -->
+  <!-- Ensin karttakirjasto ja data, sitten sovelluslogiikka -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 
