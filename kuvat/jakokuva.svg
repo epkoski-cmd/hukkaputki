@@ -1,24 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- Hukkaputken jakokuva (Open Graph). Muokkaa tätä ja aja kuvat/tee-png.sh -->
+  <!-- Hukkaputken jakokuva (Open Graph). Muokkaa tätä ja aja kuvat/tee-png.sh
+       Koko logo on keskimmäisessä 630 × 630 neliössä (x 285–915), koska
+       WhatsApp näyttää pienessä esikatselussa vain sen. -->
   <rect width="1200" height="630" fill="#faf8f5"/>
+  <g transform="translate(-8 0)">
 
   <!-- Metrolinja, joka paisuu putkeksi -->
-  <path d="M60 308 H300 C350 308 360 225 430 225 H1050 A90 90 0 0 1 1050 405 H430 C360 405 350 322 300 322 H60 Z" fill="#ff6319"/>
+  <path d="M300 293 H380 C412 293 418 235 465 235 H835 A65 65 0 0 1 835 365 H465 C418 365 412 307 380 307 H300 Z" fill="#ff6319"/>
 
   <!-- Asemapallot -->
-  <g fill="#faf8f5" stroke="#ff6319" stroke-width="10">
-    <circle cx="70" cy="315" r="20"/>
-    <circle cx="160" cy="315" r="20"/>
-    <circle cx="250" cy="315" r="20"/>
+  <g fill="#faf8f5" stroke="#ff6319" stroke-width="7">
+    <circle cx="316" cy="300" r="14"/>
+    <circle cx="362" cy="300" r="14"/>
   </g>
 
   <!-- Sana putken sisällä -->
-  <text x="745" y="358" text-anchor="middle"
+  <text x="660" y="329" text-anchor="middle"
         font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-        font-size="128" font-weight="800" letter-spacing="-4" fill="#ffffff">Hukkaputki</text>
+        font-size="80" font-weight="800" letter-spacing="-2" fill="#ffffff">Hukkaputki</text>
 
-  <!-- Vaahto: isot kuplat alhaalla, pienenevät ylöspäin -->
-  <g fill="#ffffff" stroke="#ff6319" stroke-width="6">
+  <!-- Vaahto putken oikeassa yläkulmassa (samat kuplat kuin logossa, pienennettynä) -->
+  <g transform="translate(167.5 91.75) scale(0.65)" fill="#ffffff" stroke="#ff6319" stroke-width="8">
     <circle cx="1000" cy="222" r="30"/><circle cx="1045" cy="210" r="34"/>
     <circle cx="1092" cy="226" r="28"/><circle cx="960" cy="228" r="20"/>
     <circle cx="1126" cy="252" r="20"/>
@@ -31,7 +33,9 @@
     <circle cx="944" cy="200" r="6"/>
   </g>
 
-  <text x="745" y="510" text-anchor="middle"
+  </g>
+
+  <text x="600" y="455" text-anchor="middle"
         font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-        font-size="38" fill="#6b6b66">Lähiöbaarit metron varrella</text>
+        font-size="32" fill="#6b6b66">Lähiöbaarit metron varrella</text>
 </svg>
