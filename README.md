@@ -14,6 +14,9 @@ kävelyreittiin.
 - `style.css` – ulkoasu (mobiili ensin, leveämmällä näytöllä kaksi saraketta)
 - `data.js` – **asemat ja baarit.** Tätä muokkaamalla lisäät paikkoja.
 - `app.js` – piirtää listan, laskee kävelyajat ja hoitaa suodattimet
+- `kuvat/` – jakokuva (`jakokuva.svg` → `.png`) ja ikonit (`favicon.svg`,
+  `apple-touch-icon.png`). Muokkaa SVG:tä ja aja `sh kuvat/tee-png.sh`,
+  niin PNG:t päivittyvät (vaatii Chromen).
 - `SUUNNITELMA.md` – kilpailijaselvitys ja jatkokehitysideat (vain paikallisesti,
   ei gitissä – ks. `.gitignore`)
 - `CLAUDE.md` – ohjeet Claudelle

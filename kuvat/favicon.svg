@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Pieni putki ja vaahtokuplat: selaimen välilehden ikoni -->
+  <rect x="4" y="26" width="56" height="30" rx="15" fill="#ff6319"/>
+  <g fill="#ffffff" stroke="#ff6319" stroke-width="3">
+    <circle cx="38" cy="24" r="9"/>
+    <circle cx="50" cy="22" r="8"/>
+    <circle cx="44" cy="11" r="6"/>
+    <circle cx="55" cy="10" r="4"/>
+  </g>
+</svg>
