@@ -14,9 +14,15 @@ kävelyreittiin.
 - `style.css` – ulkoasu (mobiili ensin, leveämmällä näytöllä kaksi saraketta)
 - `data.js` – **asemat ja baarit.** Tätä muokkaamalla lisäät paikkoja.
 - `app.js` – piirtää listan, laskee kävelyajat ja hoitaa suodattimet
-- `SUUNNITELMA.md` – kilpailijaselvitys, datalähteet ja jatkokehitysideat
+- `SUUNNITELMA.md` – kilpailijaselvitys ja jatkokehitysideat (vain paikallisesti,
+  ei gitissä – ks. `.gitignore`)
 - `CLAUDE.md` – ohjeet Claudelle
 - `.claude/launch.json` – Clauden esikatselun asetus
+
+## Julkaisu
+- Sivu: https://epkoski-cmd.github.io/hukkaputki/ (GitHub Pages, `main`-haara).
+  Jokainen push mainiin päivittää sivun noin minuutissa.
+- Kävijätilasto: https://hukkaputki.goatcounter.com (GoatCounter, ei evästeitä)
 
 ## Näin katsot sivua omalla koneella
 Avaa pääte projektikansiossa ja aja:
