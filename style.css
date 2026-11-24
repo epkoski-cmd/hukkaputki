@@ -170,6 +170,34 @@ h1::before {           /* pieni oranssi M-merkki otsikon eteen */
 
 .bar p.desc { margin: 0 0 10px; }
 
+/* ---------- Piilohelmi ---------- */
+:root { --gem: #1f6f78; --gem-bg: #e6f4f5; }
+
+.bar-gem { border: 2px solid var(--gem); }
+
+.gem-badge {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--gem);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.gem-why {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--gem-bg);
+  font-size: 0.9rem;
+}
+
+.chip-gem { border-color: var(--gem); color: var(--gem); font-weight: 600; }
+.chip-gem[aria-pressed="true"] { background: var(--gem); border-color: var(--gem); color: #fff; }
+
 .unverified {
   margin: 0 0 10px;
   font-size: 0.8rem;

@@ -7,6 +7,11 @@
 //   (Aalto-yliopiston uutiset, MyHelsinki, Visit Espoo, Ainoa, Radisson Blu).
 // - "tarkistettu: false" = paikka löytyy OpenStreetMapista, mutta muuta
 //   tietoa ei löytynyt. Sivu näyttää näille huomautuksen.
+// - "piilohelmi": lyhyt perustelu, jos paikka on piilohelmi. Kriteerit:
+//   1) itsenäinen paikka, ei ketju tai hotelliravintola
+//   2) jotain erikoista (oma panimo, sauna, lautapelit, opiskelijavetoinen…)
+//   3) ei ole ensimmäisenä silmien edessä (ei kauppakeskuksen pääkäytävällä)
+//   4) tiedot on tarkistettu
 
 // Asemat järjestyksessä Aalto-yliopistolta länteen.
 const ASEMAT = [
@@ -38,6 +43,7 @@ const BAARIT = [
     kuvaus: "Pienpanimon taproom ja panimokauppa sisäpihalla A Blocin takana. Auki vain keskiviikosta lauantaihin.",
     tagit: ["craft beer"],
     tarkistettu: true,
+    piilohelmi: "Pienpanimon oma taproom piilossa sisäpihalla – auki vain neljänä päivänä viikossa.",
   },
   {
     nimi: "Kipsari",
@@ -47,6 +53,7 @@ const BAARIT = [
     kuvaus: "Taideopiskelijoiden pyörittämä ravintola, baari ja kahvila. Ruoka on vegaanista.",
     tagit: ["opiskelijameininki", "ruokaa", "vegaani"],
     tarkistettu: true,
+    piilohelmi: "Opiskelijoiden itse pyörittämä baari keskellä kampusta.",
   },
   {
     nimi: "Bar Otapas",
@@ -65,6 +72,7 @@ const BAARIT = [
     kuvaus: "Lautapelibaari A Blancin ensimmäisessä kerroksessa.",
     tagit: ["lautapelit", "opiskelijameininki"],
     tarkistettu: true,
+    piilohelmi: "Lautapelejä ja olutta samassa paikassa.",
   },
   {
     nimi: "Vesiheinä",
@@ -143,6 +151,7 @@ const BAARIT = [
     kuvaus: "15 hanaa, painotus paikallisissa panimoissa. Saunat ja pizzakeittiö.",
     tagit: ["craft beer", "sauna", "ruokaa"],
     tarkistettu: true,
+    piilohelmi: "Baari ja sauna samassa paikassa, hanoissa paikallisia panimoita.",
   },
 
   // --- Matinkylä ---

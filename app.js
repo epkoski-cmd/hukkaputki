@@ -5,6 +5,9 @@
 // Valitut suodattimet. Set on lista, jossa sama arvo voi olla vain kerran.
 const valitut = new Set();
 
+// Näytetäänkö vain piilohelmet? (oma erillinen suodatin)
+let vainHelmet = false;
+
 // ---------- Kävelyaika ----------
 
 // Etäisyys kahden koordinaatin välillä metreinä (haversine-kaava).
@@ -50,6 +53,18 @@ function piirraSuodattimet() {
   const kaikkiTagit = [...new Set(BAARIT.flatMap((b) => b.tagit))].sort();
   const kontti = document.getElementById("filter-buttons");
 
+  // Ensimmäisenä erikoisnappi: vain piilohelmet
+  const helmiNappi = document.createElement("button");
+  helmiNappi.className = "chip chip-gem";
+  helmiNappi.textContent = "💎 Piilohelmet";
+  helmiNappi.setAttribute("aria-pressed", "false");
+  helmiNappi.addEventListener("click", () => {
+    vainHelmet = !vainHelmet;
+    helmiNappi.setAttribute("aria-pressed", vainHelmet ? "true" : "false");
+    piirraLinja();
+  });
+  kontti.appendChild(helmiNappi);
+
   for (const tagi of kaikkiTagit) {
     const nappi = document.createElement("button");
     nappi.className = "chip";
@@ -70,8 +85,10 @@ function piirraSuodattimet() {
   }
 }
 
-// Baari näytetään, jos sillä on KAIKKI valitut tagit.
+// Baari näytetään, jos sillä on KAIKKI valitut tagit
+// (ja se on piilohelmi, jos helmisuodatin on päällä).
 function sopiiSuodattimiin(baari) {
+  if (vainHelmet && !baari.piilohelmi) return false;
   return [...valitut].every((tagi) => baari.tagit.includes(tagi));
 }
 
@@ -98,7 +115,7 @@ function piirraLinja() {
     if (baarit.length === 0) {
       const tyhja = document.createElement("p");
       tyhja.className = "empty";
-      tyhja.textContent = valitut.size > 0
+      tyhja.textContent = valitut.size > 0 || vainHelmet
         ? "Ei osumia näillä suodattimilla."
         : "Ei vielä baareja listalla.";
       osio.appendChild(tyhja);
@@ -117,11 +134,13 @@ function piirraLinja() {
 
 function baariKortti(asema, baari) {
   const kortti = document.createElement("div");
-  kortti.className = "bar";
+  kortti.className = baari.piilohelmi ? "bar bar-gem" : "bar";
   kortti.innerHTML = `
+    ${baari.piilohelmi ? `<p class="gem-badge">💎 Piilohelmi</p>` : ""}
     <h3>${baari.nimi}</h3>
     <p class="walk">🚶 noin ${baari.minuutit} min asemalta · ${baari.osoite}</p>
     ${baari.kuvaus ? `<p class="desc">${baari.kuvaus}</p>` : ""}
+    ${baari.piilohelmi ? `<p class="gem-why"><strong>Miksi helmi:</strong> ${baari.piilohelmi}</p>` : ""}
     ${baari.tarkistettu ? "" : `<p class="unverified">Tietoja ei ole vielä tarkistettu. Katso ajantasainen tilanne Google Mapsista.</p>`}
     ${baari.tagit.length ?`<ul class="tags">${baari.tagit.map((t) => `<li>${t}</li>`).join("")}</ul>` : ""}
     <div class="links">

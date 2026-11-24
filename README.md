@@ -38,4 +38,6 @@ Mene sitten selaimella osoitteeseen http://localhost:8000.
 - Kuvaukset: paikkojen omat sivut sekä kampus- ja matkailusivut.
   Jos paikasta ei löytynyt tietoa, `data.js`:ssä on `tarkistettu: false`
   ja kortissa näkyy huomautus.
+- 💎 Piilohelmet: `data.js`:n kenttä `piilohelmi` (lyhyt perustelu).
+  Kriteerit on kirjattu `data.js`:n alkuun. Sivulla on oma suodatin helmille.
 - Kävelyaika = linnuntie × 1,3 / 80 m/min. Se on arvio, ei reititys.
