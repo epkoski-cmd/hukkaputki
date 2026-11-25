@@ -192,6 +192,30 @@ h1 { margin: 0; }
 
 .bar p.desc { margin: 0 0 10px; }
 
+/* ---------- Googlen arvosana ja kuva ---------- */
+.google-photo { margin: 0 0 8px; }
+
+.google-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;   /* varaa tilan valmiiksi, ettei sivu hypi */
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--line);
+}
+
+.google-photo figcaption {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.google-photo figcaption a { color: inherit; }
+
+.google-rating { margin: 0 0 8px; font-size: 0.9rem; }
+.google-rating .stars { color: #e8a200; }
+.google-rating a { color: var(--muted); }
+
 /* ---------- Piilohelmi ---------- */
 :root { --gem: #1f6f78; --gem-bg: #e6f4f5; }
 

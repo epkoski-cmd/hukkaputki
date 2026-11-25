@@ -6,7 +6,7 @@ tietokoneelle.
 **Versio 1:** kuusi asemaa Aalto-yliopistolta länteen (Aalto-yliopisto,
 Tapiola, Urheilupuisto, Niittykumpu, Matinkylä, Finnoo – Finnoossa ei vielä
 baareja). Baarikorteissa arvioitu kävelyaika,
-tagisuodattimet sekä linkit Google Mapsiin (arvosanat ja kuvat) ja
+tagisuodattimet, Googlen arvosana ja kuva sekä linkit Google Mapsiin ja
 kävelyreittiin.
 
 ## Tiedostot
@@ -47,4 +47,12 @@ Mene sitten selaimella osoitteeseen http://localhost:8000.
   lähde mainittava). Oranssi pallo = asema, tumma = baari, turkoosi = piilohelmi.
 - 💎 Piilohelmet: `data.js`:n kenttä `piilohelmi` (lyhyt perustelu).
   Kriteerit on kirjattu `data.js`:n alkuun. Sivulla on oma suodatin helmille.
+- Arvosanat ja kuvat: Google Places API (New). `data.js`:ssä on jokaiselle
+  baarille vain `placeId`; sivu hakee arvosanan ja kuvan Googlelta vasta,
+  kun kortti tulee näkyviin (säästää maksullisia hakuja). Googlen ehtojen
+  mukaan niitä ei saa tallentaa omiin tiedostoihin eikä näyttää muun kuin
+  Googlen kartan päällä. API-avain on `app.js`:n alussa ja rajattu Google
+  Cloudissa osoitteisiin `epkoski-cmd.github.io` ja `localhost:8000` sekä
+  pelkkään Places API:in. Uuden baarin `placeId`:n löydät Googlen
+  [Place ID Finderilla](https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder).
 - Kävelyaika = linnuntie × 1,3 / 80 m/min. Se on arvio, ei reititys.
