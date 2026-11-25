@@ -8,6 +8,68 @@ const valitut = new Set();
 // Näytetäänkö vain piilohelmet? (oma erillinen suodatin)
 let vainHelmet = false;
 
+// ---------- Kieli ----------
+
+// Valitaan kieli tässä järjestyksessä:
+// 1) osoitteen ?lang=en  2) aiempi valinta selaimen muistissa
+// 3) selaimen kieli: suomi → fi, kaikki muut → en
+function alkuKieli() {
+  const osoitteesta = new URLSearchParams(location.search).get("lang");
+  if (KIELET.includes(osoitteesta)) return osoitteesta;
+  const muistista = localStorage.getItem("kieli");
+  if (KIELET.includes(muistista)) return muistista;
+  return navigator.language.toLowerCase().startsWith("fi") ? "fi" : "en";
+}
+
+let kieli = alkuKieli();
+
+// Hakee tekstin valitulla kielellä. {n} korvataan annetulla arvolla.
+function t(avain, n) {
+  const teksti = TEKSTIT[kieli][avain] ?? TEKSTIT.fi[avain];
+  return n === undefined ? teksti : teksti.replace("{n}", n);
+}
+
+// Tagin nimi valitulla kielellä (data.js:ssä tagit ovat suomeksi).
+function tagiTeksti(tagi) {
+  return kieli === "en" ? (TAGIT_EN[tagi] ?? tagi) : tagi;
+}
+
+// Baarin kuvaus tai piilohelmiperustelu valitulla kielellä.
+// Jos englanninkielinen puuttuu, näytetään suomenkielinen.
+function kaannos(baari, kentta) {
+  return kieli === "en" ? (baari[kentta + "En"] ?? baari[kentta]) : baari[kentta];
+}
+
+// Päivittää sivun kiinteät tekstit (otsikko, iskulause, alatunniste…).
+function paivitaKiinteatTekstit() {
+  document.documentElement.lang = kieli;
+  document.title = t("sivunOtsikko");
+  document.querySelectorAll("[data-teksti]").forEach((el) => {
+    el.textContent = t(el.dataset.teksti);
+  });
+  document.getElementById("footer").innerHTML = t("alatunniste");
+  document.querySelectorAll(".lang-switch button").forEach((nappi) => {
+    nappi.setAttribute("aria-pressed", nappi.dataset.kieli === kieli ? "true" : "false");
+  });
+}
+
+// Vaihtaa kielen: muistaa valinnan, päivittää osoitteen (?lang=…)
+// ja piirtää sivun uudelleen. Suodattimet pysyvät valittuina.
+function vaihdaKieli(uusi) {
+  kieli = uusi;
+  localStorage.setItem("kieli", kieli);
+  const osoite = new URL(location.href);
+  osoite.searchParams.set("lang", kieli);
+  history.replaceState(null, "", osoite);
+  paivitaKiinteatTekstit();
+  piirraSuodattimet();
+  piirraLinja();
+}
+
+document.querySelectorAll(".lang-switch button").forEach((nappi) => {
+  nappi.addEventListener("click", () => vaihdaKieli(nappi.dataset.kieli));
+});
+
 // ---------- Kävelyaika ----------
 
 // Etäisyys kahden koordinaatin välillä metreinä (haversine-kaava).
@@ -105,24 +167,26 @@ async function taytaGoogleOsio(osio, baari) {
       const tekija = (kuva.authorAttributions || [])[0];
       const tekijaHtml = tekija
         ? `<a href="${tekija.uri}" target="_blank" rel="noopener">${tekija.displayName}</a>`
-        : "tuntematon";
+        : t("tuntematon");
       html += `
         <figure class="google-photo">
           <img src="${kuva.osoite}"
-               alt="Kuva paikasta ${baari.nimi}" loading="lazy">
-          <figcaption>Kuva: ${tekijaHtml} · Google Maps</figcaption>
+               alt="${t("kuvaPaikastaAlt", baari.nimi)}" loading="lazy">
+          <figcaption>${t("kuva")} ${tekijaHtml} · Google Maps</figcaption>
         </figure>`;
     }
 
     // Arvosana tähtinä ja numerona, linkki Google Mapsiin.
+    // Suomeksi desimaalipilkku (4,4), englanniksi piste (4.4).
     if (tiedot.rating) {
-      const arvosana = tiedot.rating.toLocaleString("fi-FI", { minimumFractionDigits: 1 });
-      const maara = (tiedot.userRatingCount || 0).toLocaleString("fi-FI");
+      const muoto = kieli === "fi" ? "fi-FI" : "en-GB";
+      const arvosana = tiedot.rating.toLocaleString(muoto, { minimumFractionDigits: 1 });
+      const maara = (tiedot.userRatingCount || 0).toLocaleString(muoto);
       html += `
         <p class="google-rating">
           <span class="stars" aria-hidden="true">★</span>
           <strong>${arvosana}</strong>
-          <a href="${tiedot.googleMapsUri}" target="_blank" rel="noopener">(${maara} arviota Google Mapsissa)</a>
+          <a href="${tiedot.googleMapsUri}" target="_blank" rel="noopener">${t("arvioita", maara)}</a>
         </p>`;
     }
 
@@ -149,16 +213,21 @@ const korttiVahti = new IntersectionObserver((havainnot) => {
 
 // ---------- Suodattimet ----------
 
+// Piirretään uudelleen myös kieltä vaihdettaessa. Napit merkitään
+// valituiksi sen mukaan, mitä käyttäjä on jo valinnut.
 function piirraSuodattimet() {
-  // Kerätään kaikki eri tagit baareista aakkosjärjestykseen.
-  const kaikkiTagit = [...new Set(BAARIT.flatMap((b) => b.tagit))].sort();
+  // Kerätään kaikki eri tagit baareista ja järjestetään ne aakkosjärjestykseen
+  // valitun kielen mukaan (tagit ovat silti sisäisesti suomeksi).
+  const kaikkiTagit = [...new Set(BAARIT.flatMap((b) => b.tagit))]
+    .sort((a, b) => tagiTeksti(a).localeCompare(tagiTeksti(b), kieli));
   const kontti = document.getElementById("filter-buttons");
+  kontti.innerHTML = "";
 
   // Ensimmäisenä erikoisnappi: vain piilohelmet
   const helmiNappi = document.createElement("button");
   helmiNappi.className = "chip chip-gem";
-  helmiNappi.textContent = "💎 Piilohelmet";
-  helmiNappi.setAttribute("aria-pressed", "false");
+  helmiNappi.textContent = t("piilohelmet");
+  helmiNappi.setAttribute("aria-pressed", vainHelmet ? "true" : "false");
   helmiNappi.addEventListener("click", () => {
     vainHelmet = !vainHelmet;
     helmiNappi.setAttribute("aria-pressed", vainHelmet ? "true" : "false");
@@ -169,8 +238,8 @@ function piirraSuodattimet() {
   for (const tagi of kaikkiTagit) {
     const nappi = document.createElement("button");
     nappi.className = "chip";
-    nappi.textContent = tagi;
-    nappi.setAttribute("aria-pressed", "false");
+    nappi.textContent = tagiTeksti(tagi);
+    nappi.setAttribute("aria-pressed", valitut.has(tagi) ? "true" : "false");
 
     nappi.addEventListener("click", () => {
       if (valitut.has(tagi)) {
@@ -201,9 +270,9 @@ function asemaKuva(asema) {
   const kuva = document.createElement("figure");
   kuva.className = "station-photo";
   kuva.innerHTML = `
-    <img src="${k.url}" alt="Metroasema: ${asema.nimi}" loading="lazy" width="960" height="640">
+    <img src="${k.url}" alt="${t("asemakuvaAlt", asema.nimi)}" loading="lazy" width="960" height="640">
     <figcaption>
-      Kuva: <a href="${k.lahde}" target="_blank" rel="noopener">${k.kuvaaja}</a>,
+      ${t("kuva")} <a href="${k.lahde}" target="_blank" rel="noopener">${k.kuvaaja}</a>,
       <a href="${k.lisenssiUrl}" target="_blank" rel="noopener">${k.lisenssi}</a>
     </figcaption>
   `;
@@ -237,14 +306,14 @@ function asemaKartta(asema, baarit) {
     // Asema: iso oranssi pallo
     L.circleMarker([asema.lat, asema.lon], {
       radius: 9, color: "#fff", weight: 3, fillColor: "#ff6319", fillOpacity: 1,
-    }).addTo(kartta).bindPopup(`<strong>${asema.nimi}</strong><br>metroasema`);
+    }).addTo(kartta).bindPopup(`<strong>${asema.nimi}</strong><br>${t("metroasema")}`);
 
     // Baarit: tumma pallo, piilohelmet turkoosilla
     for (const b of baarit) {
       L.circleMarker([b.lat, b.lon], {
         radius: 7, color: "#fff", weight: 2,
         fillColor: b.piilohelmi ? "#1f6f78" : "#1d1d1b", fillOpacity: 1,
-      }).addTo(kartta).bindPopup(`<strong>${b.nimi}</strong><br>noin ${b.minuutit} min kävelyä`);
+      }).addTo(kartta).bindPopup(`<strong>${b.nimi}</strong><br>${t("kavelyKartalla", b.minuutit)}`);
     }
 
     // Zoomataan niin, että asema ja kaikki baarit näkyvät
@@ -293,8 +362,8 @@ function piirraLinja() {
       const tyhja = document.createElement("p");
       tyhja.className = "empty";
       tyhja.textContent = valitut.size > 0 || vainHelmet
-        ? "Ei osumia näillä suodattimilla."
-        : "Ei vielä baareja listalla.";
+        ? t("eiOsumia")
+        : t("eiBaareja");
       osio.appendChild(tyhja);
     } else {
       const lista = document.createElement("div");
@@ -314,17 +383,17 @@ function baariKortti(asema, baari) {
   const kortti = document.createElement("div");
   kortti.className = baari.piilohelmi ? "bar bar-gem" : "bar";
   kortti.innerHTML = `
-    ${baari.piilohelmi ? `<p class="gem-badge">💎 Piilohelmi</p>` : ""}
+    ${baari.piilohelmi ? `<p class="gem-badge">${t("piilohelmi")}</p>` : ""}
     <h3>${baari.nimi}</h3>
-    <p class="walk">🚶 noin ${baari.minuutit} min asemalta · ${baari.osoite}</p>
+    <p class="walk">${t("kavely", baari.minuutit)} · ${baari.osoite}</p>
     ${baari.placeId ? `<div class="google"></div>` : ""}
-    ${baari.kuvaus ? `<p class="desc">${baari.kuvaus}</p>` : ""}
-    ${baari.piilohelmi ? `<p class="gem-why"><strong>Miksi helmi:</strong> ${baari.piilohelmi}</p>` : ""}
-    ${baari.tarkistettu ? "" : `<p class="unverified">Tietoja ei ole vielä tarkistettu. Katso ajantasainen tilanne Google Mapsista.</p>`}
-    ${baari.tagit.length ?`<ul class="tags">${baari.tagit.map((t) => `<li>${t}</li>`).join("")}</ul>` : ""}
+    ${baari.kuvaus ? `<p class="desc">${kaannos(baari, "kuvaus")}</p>` : ""}
+    ${baari.piilohelmi ? `<p class="gem-why"><strong>${t("miksiHelmi")}</strong> ${kaannos(baari, "piilohelmi")}</p>` : ""}
+    ${baari.tarkistettu ? "" : `<p class="unverified">${t("tarkistamaton")}</p>`}
+    ${baari.tagit.length ? `<ul class="tags">${baari.tagit.map((tagi) => `<li>${tagiTeksti(tagi)}</li>`).join("")}</ul>` : ""}
     <div class="links">
-      <a href="${googleMapsLinkki(baari)}" target="_blank" rel="noopener">Avaa Google Mapsissa →</a>
-      <a href="${reittiLinkki(asema, baari)}" target="_blank" rel="noopener">Kävelyreitti</a>
+      <a href="${googleMapsLinkki(baari)}" target="_blank" rel="noopener">${t("avaaMapsissa")}</a>
+      <a href="${reittiLinkki(asema, baari)}" target="_blank" rel="noopener">${t("kavelyreitti")}</a>
     </div>
   `;
 
@@ -339,5 +408,6 @@ function baariKortti(asema, baari) {
 }
 
 // ---------- Käynnistys ----------
+paivitaKiinteatTekstit();
 piirraSuodattimet();
 piirraLinja();

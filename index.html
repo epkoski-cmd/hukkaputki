@@ -27,18 +27,24 @@
   <!-- Leaflet: ilmainen karttakirjasto. "integrity" varmistaa, että tiedosto on aito. -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
   <header>
+    <!-- Kielinapit. app.js vaihtaa kielen ja merkitsee valitun napin. -->
+    <nav class="lang-switch" aria-label="Kieli / Language">
+      <button type="button" data-kieli="fi" lang="fi">FI</button>
+      <button type="button" data-kieli="en" lang="en">EN</button>
+    </nav>
     <h1><img class="logo" src="kuvat/logo.svg" alt="Hukkaputki" width="1120" height="330"></h1>
-    <p class="tagline">Lähiöbaarit metron varrella. Jää pois, kävele hetki, löydä jotain uutta.</p>
+    <!-- Tekstit, joissa on data-teksti, täytetään kielet.js:stä valitulla kielellä. -->
+    <p class="tagline" data-teksti="iskulause">Lähiöbaarit metron varrella. Jää pois, kävele hetki, löydä jotain uutta.</p>
   </header>
 
   <main>
     <!-- Suodatinnapit. app.js täyttää tämän tagien perusteella. -->
     <section class="filters" aria-label="Suodattimet">
-      <p class="filters-title">Mitä etsit?</p>
+      <p class="filters-title" data-teksti="mitaEtsit">Mitä etsit?</p>
       <div id="filter-buttons"></div>
     </section>
 
@@ -46,24 +52,17 @@
     <section id="line" aria-label="Metroasemat"></section>
   </main>
 
-  <footer>
-    <p>
-      Kävelyajat ovat arvioita linnuntien perusteella.
-      Baarien arvosanat ja kuvat: Google Maps. Aukioloajat löydät Google Mapsista.
-    </p>
-    <p>
-      💎 Piilohelmi = itsenäinen paikka, jossa on jotain erikoista ja joka ei
-      ole ensimmäisenä silmien edessä.
-    </p>
-    <p>Sijaintitiedot ja kartat: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-tekijät</a>.
-      Asemakuvat: <a href="https://commons.wikimedia.org">Wikimedia Commons</a>, kuvaajat mainittu kuvien alla.</p>
-  </footer>
+  <!-- Alatunnisteen tekstit tulevat kielet.js:stä (kohta "alatunniste"). -->
+  <footer id="footer"></footer>
 
-  <!-- Ensin karttakirjasto ja data, sitten sovelluslogiikka -->
+  <!-- Ensin karttakirjasto ja data, sitten sovelluslogiikka.
+       ?v=2 on versionumero: kasvata sitä aina, kun muutat tiedostoja, niin
+       selain hakee uudet versiot eikä käytä vanhoja välimuistista. -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=2"></script>
+  <script src="kielet.js?v=2"></script>
+  <script src="app.js?v=2"></script>
 
   <!-- GoatCounter: yksityisyyttä kunnioittava kävijätilasto, ei evästeitä.
        Ei laske käyntejä localhostista. https://www.goatcounter.com -->

@@ -25,7 +25,46 @@ header, main, footer {
 }
 
 /* ---------- Otsikko ---------- */
-header { padding-top: 32px; }
+header { padding-top: 12px; position: relative; }
+
+/* Kielinapit: puhelimella omalla rivillään oikeassa reunassa logon yläpuolella,
+   leveämmällä näytöllä oikeassa yläkulmassa logon vieressä. */
+.lang-switch {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 700px) {
+  header { padding-top: 32px; }
+  .lang-switch {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    margin: 0;
+  }
+}
+
+.lang-switch button {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.lang-switch button:first-child { border-radius: 999px 0 0 999px; }
+.lang-switch button:last-child { border-radius: 0 999px 999px 0; }
+
+.lang-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
 
 h1 { margin: 0; }
 
