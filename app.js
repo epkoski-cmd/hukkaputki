@@ -132,7 +132,10 @@ function haeGoogleTiedot(placeId) {
     const haku = fetch(`https://places.googleapis.com/v1/places/${placeId}?languageCode=fi`, {
       headers: {
         "X-Goog-Api-Key": GOOGLE_API_KEY,
-        "X-Goog-FieldMask": "rating,userRatingCount,googleMapsUri,photos",
+        // Aukioloajat ovat samassa hintaluokassa kuin arvosana, joten ne
+        // eivät tee hausta kalliimpaa.
+        "X-Goog-FieldMask": "rating,userRatingCount,googleMapsUri,photos," +
+          "currentOpeningHours.openNow,currentOpeningHours.nextOpenTime,currentOpeningHours.nextCloseTime",
       },
     })
       .then(jsonTaiVirhe)
@@ -152,6 +155,59 @@ function haeGoogleTiedot(placeId) {
     googleMuisti.set(placeId, haku);
   }
   return googleMuisti.get(placeId);
+}
+
+// ---------- Aukiolo ----------
+
+// Muuttaa Googlen ajan (esim. "2026-11-25T14:00:00Z") luettavaksi
+// Suomen aikaa: "klo 16", "huomenna klo 16" tai "ke klo 16".
+// Englanniksi: "16:00", "tomorrow 16:00" tai "Wed 16:00".
+// sulkemisaika = true: yöllä sulkeutuva baari on "auki klo 2 asti", ei
+// "auki huomenna klo 2 asti", ja puoliyö on "klo 24" / "midnight".
+function aikaTeksti(iso, sulkemisaika = false) {
+  const aika = new Date(iso);
+  const vyohyke = { timeZone: "Europe/Helsinki" };
+  const kello = aika.toLocaleTimeString("en-GB", { ...vyohyke, hour: "2-digit", minute: "2-digit" });
+  const [tunnit, minuutit] = kello.split(":");
+  let kelloTeksti = kieli === "fi"
+    ? "klo " + Number(tunnit) + (minuutit === "00" ? "" : "." + minuutit)
+    : kello;
+  if (sulkemisaika && kello === "00:00") kelloTeksti = kieli === "fi" ? "klo 24" : "midnight";
+
+  // Onko aika tänään, huomenna vai myöhemmin? Verrataan päivämääriä Suomen ajassa.
+  const paiva = (d) => d.toLocaleDateString("en-CA", vyohyke); // muoto 2026-11-25
+  const nyt = new Date();
+  const huomenna = new Date(nyt.getTime() + 24 * 60 * 60 * 1000);
+  if (paiva(aika) === paiva(nyt)) return kelloTeksti;
+  // Sulkemisaika ennen klo 7 seuraavana aamuna = saman illan jatkot.
+  if (sulkemisaika && paiva(aika) === paiva(huomenna) && Number(tunnit) < 7) return kelloTeksti;
+  if (paiva(aika) === paiva(huomenna)) return `${t("huomenna")} ${kelloTeksti}`;
+  const viikonpaiva = aika.toLocaleDateString(kieli === "fi" ? "fi-FI" : "en-GB", { ...vyohyke, weekday: "short" });
+  return `${viikonpaiva} ${kelloTeksti}`;
+}
+
+// Palauttaa aukiolotekstin, esim. "Auki klo 2 asti" tai
+// "Suljettu · aukeaa ke klo 16". Jos Googlella ei ole aukioloaikoja,
+// palautetaan tyhjä, eikä kortissa näytetä mitään.
+// Tieto haettiin, kun kortti tuli näkyviin. Jos sivu on ollut pitkään auki,
+// tarkistetaan kellosta, onko sulkemis- tai avaamisaika jo ohitettu.
+function aukioloHtml(tiedot) {
+  const a = tiedot.currentOpeningHours;
+  if (!a) return "";
+  const nyt = Date.now();
+  let auki = a.openNow;
+  if (auki && a.nextCloseTime && nyt >= Date.parse(a.nextCloseTime)) auki = false;
+  if (!auki && a.nextOpenTime && nyt >= Date.parse(a.nextOpenTime)) auki = true;
+
+  let teksti;
+  if (auki) {
+    const ennenSulkemista = a.nextCloseTime && nyt < Date.parse(a.nextCloseTime);
+    teksti = ennenSulkemista ? t("aukiAsti", aikaTeksti(a.nextCloseTime, true)) : t("aukiNyt");
+  } else {
+    const ennenAvaamista = a.nextOpenTime && nyt < Date.parse(a.nextOpenTime);
+    teksti = ennenAvaamista ? t("suljettuAukeaa", aikaTeksti(a.nextOpenTime)) : t("suljettu");
+  }
+  return `<p class="open-status ${auki ? "is-open" : "is-closed"}">${teksti}</p>`;
 }
 
 // Täyttää kortin Google-osion. Jos haku epäonnistuu, osio poistetaan
@@ -189,6 +245,9 @@ async function taytaGoogleOsio(osio, baari) {
           <a href="${tiedot.googleMapsUri}" target="_blank" rel="noopener">${t("arvioita", maara)}</a>
         </p>`;
     }
+
+    // Auki / suljettu arvosanan alle.
+    html += aukioloHtml(tiedot);
 
     if (html) {
       osio.innerHTML = html;

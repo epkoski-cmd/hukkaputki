@@ -255,6 +255,28 @@ h1 { margin: 0; }
 .google-rating .stars { color: #e8a200; }
 .google-rating a { color: var(--muted); }
 
+/* Auki / suljettu: värillinen pallo tekstin edessä */
+.open-status {
+  margin: -4px 0 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.open-status::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  vertical-align: 1px;
+}
+
+.open-status.is-open { color: #1e7a3c; }
+.open-status.is-open::before { background: #1e9e4a; }
+.open-status.is-closed { color: #a3341b; }
+.open-status.is-closed::before { background: #d2462a; }
+
 /* ---------- Piilohelmi ---------- */
 :root { --gem: #1f6f78; --gem-bg: #e6f4f5; }
 

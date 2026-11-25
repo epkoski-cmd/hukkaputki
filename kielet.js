@@ -29,9 +29,14 @@ const TEKSTIT = {
     kavelyreitti: "Kävelyreitti",
     eiOsumia: "Ei osumia näillä suodattimilla.",
     eiBaareja: "Ei vielä baareja listalla.",
+    aukiAsti: "Auki {n} asti",
+    aukiNyt: "Auki nyt",
+    suljettuAukeaa: "Suljettu · aukeaa {n}",
+    suljettu: "Suljettu",
+    huomenna: "huomenna",
     alatunniste: `
       <p>Kävelyajat ovat arvioita linnuntien perusteella.
-        Baarien arvosanat ja kuvat: Google Maps. Aukioloajat löydät Google Mapsista.</p>
+        Baarien arvosanat, kuvat ja aukioloajat: Google Maps.</p>
       <p>💎 Piilohelmi = itsenäinen paikka, jossa on jotain erikoista ja joka ei
         ole ensimmäisenä silmien edessä.</p>
       <p>Sijaintitiedot ja kartat: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-tekijät</a>.
@@ -58,9 +63,14 @@ const TEKSTIT = {
     kavelyreitti: "Walking route",
     eiOsumia: "No matches with these filters.",
     eiBaareja: "No bars listed yet.",
+    aukiAsti: "Open until {n}",
+    aukiNyt: "Open now",
+    suljettuAukeaa: "Closed · opens {n}",
+    suljettu: "Closed",
+    huomenna: "tomorrow",
     alatunniste: `
       <p>Walking times are estimates based on straight-line distance.
-        Bar ratings and photos: Google Maps. Check opening hours on Google Maps.</p>
+        Bar ratings, photos and opening hours: Google Maps.</p>
       <p>💎 Hidden gem = an independent place with something special that
         isn't the first thing you see.</p>
       <p>Locations and maps: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.

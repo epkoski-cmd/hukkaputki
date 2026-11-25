@@ -6,8 +6,9 @@ tietokoneelle.
 **Versio 1:** kuusi asemaa Aalto-yliopistolta länteen (Aalto-yliopisto,
 Tapiola, Urheilupuisto, Niittykumpu, Matinkylä, Finnoo – Finnoossa ei vielä
 baareja). Baarikorteissa arvioitu kävelyaika,
-tagisuodattimet, Googlen arvosana ja kuva sekä linkit Google Mapsiin ja
-kävelyreittiin.
+tagisuodattimet, Googlen arvosana, kuva ja aukiolotieto ("Auki klo 2 asti" /
+"Suljettu · aukeaa ke klo 16") sekä linkit Google Mapsiin ja kävelyreittiin.
+Jos Googlella ei ole paikan aukioloaikoja, tietoa ei näytetä.
 
 **Kielet:** suomi ja englanti (FI | EN -nappi). Oletuskieli tulee selaimen
 kielestä, valinta muistetaan, ja englanninkielisen version voi jakaa
