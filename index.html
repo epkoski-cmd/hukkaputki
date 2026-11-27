@@ -27,7 +27,7 @@
   <!-- Leaflet: ilmainen karttakirjasto. "integrity" varmistaa, että tiedosto on aito. -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <header>
@@ -36,24 +36,26 @@
       <button type="button" data-kieli="fi" lang="fi">FI</button>
       <button type="button" data-kieli="en" lang="en">EN</button>
     </nav>
-    <h1><img class="logo" src="kuvat/logo.svg" alt="Hukkaputki" width="1120" height="330"></h1>
+    <!-- Logo vie etusivulle (app.js lisää osoitteeseen valitun kielen). -->
+    <h1><a href="./" id="koti-linkki"><img class="logo" src="kuvat/logo.svg" alt="Hukkaputki" width="1120" height="330"></a></h1>
     <!-- Tekstit, joissa on data-teksti, täytetään kielet.js:stä valitulla kielellä. -->
     <p class="tagline" data-teksti="iskulause">Lähiöbaarit metron varrella. Jää pois, kävele hetki, löydä jotain uutta.</p>
+    <!-- Päänavigaatio: putkigeneraattori ja koko lista. -->
+    <nav class="paanavi" aria-label="Navigaatio">
+      <a href="#putki" id="navi-putki" class="putki-nappi" data-teksti="naviPutki">🚇 Pistetään putki päälle</a>
+      <a href="#kaikki" id="navi-kaikki" class="putki-nappi-toissijainen" data-teksti="naviKaikki">📍 Kaikki mestat</a>
+    </nav>
   </header>
 
   <main>
     <!-- Putkigeneraattori. putki.js täyttää tekstit ja tuloksen. -->
     <section id="putki" class="putki" aria-label="Putkigeneraattori">
-      <div class="putki-aloitus">
-        <button type="button" id="putki-avaa" class="putki-nappi">Pistetään putki päälle</button>
-        <button type="button" id="putki-yllata" class="putki-nappi-toissijainen">🎲 Yllätä minut</button>
-      </div>
       <div id="putki-valinnat" hidden></div>
       <div id="putki-tulos"></div>
     </section>
 
     <!-- Suodatinnapit. app.js täyttää tämän tagien perusteella. -->
-    <section class="filters" aria-label="Suodattimet">
+    <section id="kaikki" class="filters" aria-label="Suodattimet">
       <p class="filters-title" data-teksti="mitaEtsit">Mitä etsit?</p>
       <div id="filter-buttons"></div>
     </section>
@@ -66,14 +68,14 @@
   <footer id="footer"></footer>
 
   <!-- Ensin karttakirjasto ja data, sitten sovelluslogiikka.
-       ?v=5 on versionumero: kasvata sitä aina, kun muutat tiedostoja, niin
+       ?v=7 on versionumero: kasvata sitä aina, kun muutat tiedostoja, niin
        selain hakee uudet versiot eikä käytä vanhoja välimuistista. -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="data.js?v=5"></script>
-  <script src="kielet.js?v=5"></script>
-  <script src="app.js?v=5"></script>
-  <script src="putki.js?v=5"></script>
+  <script src="data.js?v=7"></script>
+  <script src="kielet.js?v=7"></script>
+  <script src="app.js?v=7"></script>
+  <script src="putki.js?v=7"></script>
 
   <!-- GoatCounter: yksityisyyttä kunnioittava kävijätilasto, ei evästeitä.
        Ei laske käyntejä localhostista. https://www.goatcounter.com -->

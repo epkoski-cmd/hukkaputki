@@ -7,6 +7,8 @@
 // - reitti etenee metrolinjaa yhteen suuntaan
 // - jos sopivia asemia ei riitä, samalle asemalle saa tulla toinen baari
 // - kiinni olevat baarit näytetään, Google-osio kertoo aukiolon
+// - tageista riittää YKSI: "karaoke + craft beer" = putkessa voi olla kumpaakin.
+//   (Listan suodattimissa sen sijaan vaaditaan kaikki valitut tagit.)
 
 // Käyttäjän valinnat. Tagit ovat samat kuin listan suodattimissa, mutta
 // valinnat ovat omansa: putken tekeminen ei muuta alla olevaa listaa.
@@ -44,11 +46,27 @@ function sekoita(lista) {
   return kopio;
 }
 
+// Baarit, jotka sopivat valintoihin: piilohelmi (jos valittu) ja vähintään
+// yksi valituista tageista (jos tageja on valittu).
+function sopivatBaarit({ tagit, helmet }) {
+  return BAARIT.filter((b) =>
+    (!helmet || b.piilohelmi) &&
+    (tagit.size === 0 || b.tagit.some((tagi) => tagit.has(tagi))));
+}
+
+// Generaattorissa näytetään vain tagit, joilla on vähintään 2 baaria.
+// Yhden baarin tagilla ei saa putkea aikaan.
+function putkenTagit() {
+  const maarat = new Map();
+  for (const b of BAARIT) for (const tagi of b.tagit) maarat.set(tagi, (maarat.get(tagi) || 0) + 1);
+  return [...maarat].filter(([, n]) => n >= 2).map(([tagi]) => tagi)
+    .sort((a, b) => tagiTeksti(a).localeCompare(tagiTeksti(b), kieli));
+}
+
 // Arpoo putken. Palauttaa listan baareja reitin järjestyksessä.
 function arvoPutki({ maara, alku, tagit, helmet }) {
   // 1) Baarit, jotka sopivat valintoihin, asemittain.
-  const sopivat = BAARIT.filter((b) =>
-    (!helmet || b.piilohelmi) && [...tagit].every((tagi) => b.tagit.includes(tagi)));
+  const sopivat = sopivatBaarit({ tagit, helmet });
   const asemanBaarit = (asemaId) => sopivat.filter((b) => b.asema === asemaId);
 
   // Asemien järjestysnumerot linjalla (ASEMAT on idästä länteen).
@@ -124,10 +142,14 @@ function piirraValinnat() {
       </select>
     </div>
     <div class="putki-kentta">
-      <p class="putki-otsake">${t("mitaEtsit")}</p>
+      <p class="putki-otsake">${t("putkiMitaEtsit")}</p>
       <div class="putki-tagit"></div>
+      <p class="putki-laskuri" aria-live="polite"></p>
     </div>
-    <button type="button" class="putki-paalle">${t("putkiPaalle")}</button>
+    <div class="putki-napit">
+      <button type="button" class="putki-paalle">${t("putkiPaalle")}</button>
+      <button type="button" class="putki-nappi-toissijainen" data-toiminto="yllata">${t("putkiYllata")}</button>
+    </div>
   `;
 
   // Baarien määrä
@@ -136,6 +158,7 @@ function piirraValinnat() {
       putkiValinnat.maara = Number(nappi.dataset.maara);
       kontti.querySelectorAll("[data-maara]").forEach((n) =>
         n.setAttribute("aria-pressed", n === nappi ? "true" : "false"));
+      paivitaLaskuri();
     });
   });
 
@@ -154,26 +177,53 @@ function piirraValinnat() {
   helmi.addEventListener("click", () => {
     putkiValinnat.helmet = !putkiValinnat.helmet;
     helmi.setAttribute("aria-pressed", putkiValinnat.helmet ? "true" : "false");
+    paivitaLaskuri();
   });
   tagiKontti.appendChild(helmi);
 
-  const kaikkiTagit = [...new Set(BAARIT.flatMap((b) => b.tagit))]
-    .sort((a, b) => tagiTeksti(a).localeCompare(tagiTeksti(b), kieli));
-  for (const tagi of kaikkiTagit) {
+  for (const tagi of putkenTagit()) {
     const nappi = document.createElement("button");
     nappi.type = "button";
     nappi.className = "chip";
+    nappi.dataset.tagi = tagi;
     nappi.textContent = tagiTeksti(tagi);
     nappi.setAttribute("aria-pressed", putkiValinnat.tagit.has(tagi) ? "true" : "false");
     nappi.addEventListener("click", () => {
       if (putkiValinnat.tagit.has(tagi)) putkiValinnat.tagit.delete(tagi);
       else putkiValinnat.tagit.add(tagi);
       nappi.setAttribute("aria-pressed", putkiValinnat.tagit.has(tagi) ? "true" : "false");
+      paivitaLaskuri();
     });
     tagiKontti.appendChild(nappi);
   }
 
   kontti.querySelector(".putki-paalle").addEventListener("click", () => teePutki(putkiValinnat));
+  kontti.querySelector('[data-toiminto="yllata"]').addEventListener("click", yllataMinut);
+  paivitaLaskuri();
+}
+
+// Kertoo heti, montako baaria valintoihin sopii, ja estää valinnat,
+// joilla ei saisi yhtään baaria.
+function paivitaLaskuri() {
+  const kontti = document.getElementById("putki-valinnat");
+  const laskuri = kontti.querySelector(".putki-laskuri");
+  if (!laskuri) return;
+  const n = sopivatBaarit(putkiValinnat).length;
+
+  // Piilohelmet päällä: tagi, jolla ei ole yhtään piilohelmeä, ei tuo mitään.
+  kontti.querySelectorAll(".putki-tagit [data-tagi]").forEach((nappi) => {
+    const turha = putkiValinnat.helmet && !putkiValinnat.tagit.has(nappi.dataset.tagi) &&
+      !BAARIT.some((b) => b.piilohelmi && b.tagit.includes(nappi.dataset.tagi));
+    nappi.disabled = turha;
+  });
+
+  laskuri.textContent = n === 0
+    ? t("putkiLaskuriNolla")
+    : n < putkiValinnat.maara
+      ? t("putkiLaskuriVahan", n)
+      : t("putkiLaskuri", n);
+  laskuri.classList.toggle("on-varoitus", n < putkiValinnat.maara);
+  kontti.querySelector(".putki-paalle").disabled = n === 0;
 }
 
 // ---------- Putken teko ja tulos ----------
@@ -317,17 +367,28 @@ function piirraTulos() {
 
 // Piirretään uudelleen myös kieltä vaihdettaessa (app.js kutsuu tätä).
 function piirraPutki() {
-  document.getElementById("putki-avaa").textContent = t("putkiAvaa");
-  document.getElementById("putki-yllata").textContent = t("putkiYllata");
   piirraValinnat();
   piirraTulos();
 }
 
-document.getElementById("putki-avaa").addEventListener("click", () => {
-  valinnatAuki = !valinnatAuki;
+// Navigaation "Pistetään putki päälle" avaa valinnat.
+document.getElementById("navi-putki").addEventListener("click", (e) => {
+  e.preventDefault();
+  valinnatAuki = true;
   piirraValinnat();
+  document.getElementById("putki").scrollIntoView({ behavior: "smooth", block: "start" });
 });
-document.getElementById("putki-yllata").addEventListener("click", yllataMinut);
+
+// Logo vie etusivulle: putki ja valinnat suljetaan ja palataan ylös.
+document.getElementById("koti-linkki").addEventListener("click", (e) => {
+  e.preventDefault();
+  nykyinenPutki = [];
+  viimeisetValinnat = null;
+  valinnatAuki = false;
+  paivitaPutkiOsoite();
+  piirraPutki();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 // Jos osoitteessa on ?putki=…, näytetään jaettu putki.
 // Tuntemattomat id:t (esim. poistettu baari) ohitetaan.

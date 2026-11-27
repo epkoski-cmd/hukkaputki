@@ -248,44 +248,12 @@ const BAARIT = [
     piilohelmi: "Opiskelijoiden itse pyörittämä baari keskellä kampusta.",
     piilohelmiEn: "A bar run by the students themselves, right in the middle of campus.",
   },
-  {
-    id: "bar-otapas",
-    nimi: "Bar Otapas",
-    asema: "aalto",
-    osoite: "Otakaari 27 (A Blanc), Espoo",
-    placeId: "ChIJ_Q-OGwD1jUYRZX4y1TDY3Ac",
-    lat: 60.1839647, lon: 24.8310598,
-    kuvaus: "Lounge-henkinen baari Alvar Aallon suunnittelemassa A Blancissa. Laaja juomavalikoima, auki joka päivä klo 2 asti.",
-    kuvausEn: "Lounge-style bar in A Blanc, designed by Alvar Aalto. Wide selection of drinks, open daily until 2 am.",
-    tagit: ["drinkit", "myöhään auki"],
-    tarkistettu: true,
-  },
-  {
-    id: "taproom-d20",
-    nimi: "Taproom d20",
-    asema: "aalto",
-    osoite: "Otakaari 27 (A Blanc), Espoo",
-    placeId: "ChIJhXReF771jUYR7-b4jtUoku4",
-    lat: 60.1839647, lon: 24.8310598,
-    kuvaus: "Lautapelibaari A Blancin ensimmäisessä kerroksessa.",
-    kuvausEn: "Board game bar on the ground floor of A Blanc.",
-    tagit: ["lautapelit", "opiskelijameininki"],
-    tarkistettu: true,
-    piilohelmi: "Lautapelejä ja olutta samassa paikassa.",
-    piilohelmiEn: "Board games and beer in the same place.",
-  },
-  {
-    id: "vesiheina",
-    nimi: "Vesiheinä",
-    asema: "aalto",
-    osoite: "Otakaari 27 (A Blanc), Espoo",
-    placeId: "ChIJ06lBBln1jUYR_bCeM70-4Ac",
-    lat: 60.1839647, lon: 24.8310598,
-    kuvaus: "Olut- ja viskihuone A Blancissa. Vaihtuvia tuotteita ja maistelutilaisuuksia.",
-    kuvausEn: "Beer and whisky room in A Blanc. Rotating selection and tasting events.",
-    tagit: ["craft beer", "viski"],
-    tarkistettu: true,
-  },
+  // Bar Otapas (id bar-otapas, placeId ChIJ_Q-OGwD1jUYRZX4y1TDY3Ac, A Blanc)
+  // poistettu 27.11.2026: lopettanut pysyvästi (Google: CLOSED_PERMANENTLY).
+  // Taproom d20 (id taproom-d20, placeId ChIJhXReF771jUYR7-b4jtUoku4, A Blanc)
+  // poistettu 27.11.2026: lopettanut pysyvästi (Google: CLOSED_PERMANENTLY).
+  // Vesiheinä (id vesiheina, placeId ChIJ06lBBln1jUYR_bCeM70-4Ac, A Blanc)
+  // poistettu 27.11.2026: lopettanut pysyvästi (Google: CLOSED_PERMANENTLY).
   {
     id: "bistro-ranta",
     nimi: "Bistro Ranta",
@@ -397,18 +365,8 @@ const BAARIT = [
     tagit: ["viinit", "drinkit", "terassi", "livemusiikki"],
     tarkistettu: true,
   },
-  {
-    id: "o-learys-iso-omena",
-    nimi: "O'Learys Iso Omena",
-    asema: "matinkyla",
-    osoite: "Piispansilta 11 (Iso Omena), Espoo",
-    placeId: "ChIJT7zBlx31jUYRqoJtH-P4CmM",
-    lat: 60.162919, lon: 24.737629,
-    kuvaus: "Urheilubaari Iso Omenassa. Shuffleboardia ja biljardia, perjantaisin happy hour.",
-    kuvausEn: "Sports bar in the Iso Omena shopping centre. Shuffleboard and billiards, happy hour on Fridays.",
-    tagit: ["urheilu", "pelit", "ruokaa"],
-    tarkistettu: true,
-  },
+  // O'Learys Iso Omena (id o-learys-iso-omena, placeId ChIJT7zBlx31jUYRqoJtH-P4CmM)
+  // poistettu 27.11.2026: lopettanut pysyvästi (Google: CLOSED_PERMANENTLY).
   {
     id: "mega-bistro-night-club",
     nimi: "Mega Bistro & Night Club",

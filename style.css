@@ -79,14 +79,30 @@ h1 { margin: 0; }
 .tagline { color: var(--muted); margin-top: 4px; }
 
 /* ---------- Putkigeneraattori ---------- */
-.putki { padding: 16px 0 8px; }
+/* Logo on linkki etusivulle */
+#koti-linkki { display: inline-block; }
 
-.putki-aloitus {
+/* Päänavigaatio otsikon alla */
+.paanavi {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  margin: 4px 0 8px;
 }
+
+.paanavi a {
+  text-decoration: none;
+  display: inline-block;
+  flex: 1 1 auto;        /* puhelimella napit venyvät rivin levyisiksi */
+  text-align: center;
+}
+
+@media (min-width: 700px) {
+  .paanavi a { flex: 0 0 auto; }
+}
+
+.putki { scroll-margin-top: 8px; }
 
 /* Iso oranssi päänappi – sivun tärkein toiminto */
 .putki-nappi {
@@ -117,7 +133,7 @@ h1 { margin: 0; }
 
 /* Valinnat */
 #putki-valinnat {
-  margin-top: 14px;
+  margin: 8px 0 12px;
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -149,6 +165,12 @@ h1 { margin: 0; }
   background: var(--card);
   max-width: 100%;
 }
+
+/* Montako baaria sopii – päivittyy heti valintoja muuttaessa */
+.putki-laskuri { margin: 10px 0 0; font-size: 0.9rem; color: #1e7a3c; font-weight: 600; }
+.putki-laskuri.on-varoitus { color: #a3341b; }
+
+.putki-paalle:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .putki-paalle {
   font: inherit;
@@ -256,6 +278,11 @@ h1 { margin: 0; }
   background: var(--card);
   color: var(--ink);
   cursor: pointer;
+}
+
+.chip:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .chip[aria-pressed="true"] {

@@ -3,7 +3,7 @@
 Lähiöbaarit Helsingin metron varrella. Selaimessa toimiva sivu puhelimelle ja
 tietokoneelle.
 
-**Länsimetro:** 13 asemaa Lauttasaaresta Kivenlahteen ja 29 baaria
+**Länsimetro:** 13 asemaa Lauttasaaresta Kivenlahteen ja 25 baaria
 (Koivusaaressa, Keilaniemessä, Finnoossa ja Kaitaalla ei vielä baareja). Baarikorteissa arvioitu kävelyaika,
 tagisuodattimet, Googlen arvosana, kuva ja aukiolotieto ("Auki klo 2 asti" /
 "Suljettu · aukeaa ke klo 16") sekä linkit Google Mapsiin ja kävelyreittiin.
@@ -11,7 +11,11 @@ Jos Googlella ei ole paikan aukioloaikoja, tietoa ei näytetä.
 
 **Putkigeneraattori** ("Pistetään putki päälle" / "Start my tube crawl"):
 arpoo 2–5 baarin reitin metrolinjaa yhteen suuntaan, valittavissa
-aloitusasema ja tagit. "🎲 Yllätä minut" arpoo 3 baaria ilman valintoja.
+aloitusasema ja tagit. Generaattorissa baarille riittää yksi valituista
+tageista, ja siinä näytetään vain tagit, joilla on vähintään 2 baaria;
+valintojen alla näkyy heti, montako baaria sopii. Listan suodattimissa
+vaaditaan kaikki valitut tagit, ja nollaan johtavat napit harmaantuvat.
+Ylhäällä navigaatio: "Pistetään putki päälle" ja "Kaikki mestat". Logo vie etusivulle. "🎲 Yllätä minut" arpoo 3 baaria ilman valintoja.
 Reitin voi jakaa linkkinä (`?putki=baari-id,baari-id,…`). Tuloksen lopussa
 kotimatkalinkki HSL:n Reittioppaaseen ja "Jäikö putki päälle?" -tukilinkit.
 Baarien `id`:tä ei saa muuttaa, ettei jo jaetut linkit rikkoudu.

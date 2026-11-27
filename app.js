@@ -48,6 +48,7 @@ function paivitaKiinteatTekstit() {
     el.textContent = t(el.dataset.teksti);
   });
   document.getElementById("footer").innerHTML = t("alatunniste");
+  document.getElementById("koti-linkki").href = `./?lang=${kieli}`;
   document.querySelectorAll(".lang-switch button").forEach((nappi) => {
     nappi.setAttribute("aria-pressed", nappi.dataset.kieli === kieli ? "true" : "false");
   });
@@ -291,6 +292,7 @@ function piirraSuodattimet() {
   helmiNappi.addEventListener("click", () => {
     vainHelmet = !vainHelmet;
     helmiNappi.setAttribute("aria-pressed", vainHelmet ? "true" : "false");
+    paivitaSuodatinTilat();
     piirraLinja();
   });
   kontti.appendChild(helmiNappi);
@@ -301,6 +303,7 @@ function piirraSuodattimet() {
     nappi.textContent = tagiTeksti(tagi);
     nappi.setAttribute("aria-pressed", valitut.has(tagi) ? "true" : "false");
 
+    nappi.dataset.tagi = tagi;
     nappi.addEventListener("click", () => {
       if (valitut.has(tagi)) {
         valitut.delete(tagi);
@@ -308,11 +311,26 @@ function piirraSuodattimet() {
         valitut.add(tagi);
       }
       nappi.setAttribute("aria-pressed", valitut.has(tagi) ? "true" : "false");
+      paivitaSuodatinTilat();
       piirraLinja();
     });
 
     kontti.appendChild(nappi);
   }
+  paivitaSuodatinTilat();
+}
+
+// Harmaannuttaa napit, jotka veisivät nollaan osumaan. Valitun napin voi
+// aina poistaa. Näin käyttäjä ei päädy tyhjään listaan.
+function paivitaSuodatinTilat() {
+  const osumia = (tagit, helmet) => BAARIT.filter((b) =>
+    (!helmet || b.piilohelmi) && tagit.every((tagi) => b.tagit.includes(tagi))).length;
+  document.querySelectorAll("#filter-buttons [data-tagi]").forEach((nappi) => {
+    const tagi = nappi.dataset.tagi;
+    nappi.disabled = !valitut.has(tagi) && osumia([...valitut, tagi], vainHelmet) === 0;
+  });
+  const helmiNappi = document.querySelector("#filter-buttons .chip-gem");
+  if (helmiNappi) helmiNappi.disabled = !vainHelmet && osumia([...valitut], true) === 0;
 }
 
 // Baari näytetään, jos sillä on KAIKKI valitut tagit
