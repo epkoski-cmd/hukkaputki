@@ -3,9 +3,8 @@
 Lähiöbaarit Helsingin metron varrella. Selaimessa toimiva sivu puhelimelle ja
 tietokoneelle.
 
-**Versio 1:** kuusi asemaa Aalto-yliopistolta länteen (Aalto-yliopisto,
-Tapiola, Urheilupuisto, Niittykumpu, Matinkylä, Finnoo – Finnoossa ei vielä
-baareja). Baarikorteissa arvioitu kävelyaika,
+**Länsimetro:** 13 asemaa Lauttasaaresta Kivenlahteen ja 29 baaria
+(Koivusaaressa, Keilaniemessä, Finnoossa ja Kaitaalla ei vielä baareja). Baarikorteissa arvioitu kävelyaika,
 tagisuodattimet, Googlen arvosana, kuva ja aukiolotieto ("Auki klo 2 asti" /
 "Suljettu · aukeaa ke klo 16") sekä linkit Google Mapsiin ja kävelyreittiin.
 Jos Googlella ei ole paikan aukioloaikoja, tietoa ei näytetä.
@@ -53,7 +52,7 @@ Mene sitten selaimella osoitteeseen http://localhost:8000.
 - Kuvaukset: paikkojen omat sivut sekä kampus- ja matkailusivut.
   Jos paikasta ei löytynyt tietoa, `data.js`:ssä on `tarkistettu: false`
   ja kortissa näkyy huomautus.
-- Asemakuvat: Wikimedia Commons (CC BY-SA 4.0). Kuvaaja ja lisenssi näkyvät
+- Asemakuvat: Wikimedia Commons (CC BY-SA 4.0 tai CC BY 2.0). Kuvaaja ja lisenssi näkyvät
   kuvan alla, osoitteet `data.js`:n `kuva`-kentässä.
 - Kartat: Leaflet-kirjasto ja OpenStreetMapin karttapohja (ilmainen,
   lähde mainittava). Oranssi pallo = asema, tumma = baari, turkoosi = piilohelmi.
