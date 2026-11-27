@@ -9,6 +9,13 @@ tagisuodattimet, Googlen arvosana, kuva ja aukiolotieto ("Auki klo 2 asti" /
 "Suljettu · aukeaa ke klo 16") sekä linkit Google Mapsiin ja kävelyreittiin.
 Jos Googlella ei ole paikan aukioloaikoja, tietoa ei näytetä.
 
+**Putkigeneraattori** ("Pistetään putki päälle" / "Start my tube crawl"):
+arpoo 2–5 baarin reitin metrolinjaa yhteen suuntaan, valittavissa
+aloitusasema ja tagit. "🎲 Yllätä minut" arpoo 3 baaria ilman valintoja.
+Reitin voi jakaa linkkinä (`?putki=baari-id,baari-id,…`). Tuloksen lopussa
+kotimatkalinkki HSL:n Reittioppaaseen ja "Jäikö putki päälle?" -tukilinkit.
+Baarien `id`:tä ei saa muuttaa, ettei jo jaetut linkit rikkoudu.
+
 **Kielet:** suomi ja englanti (FI | EN -nappi). Oletuskieli tulee selaimen
 kielestä, valinta muistetaan, ja englanninkielisen version voi jakaa
 osoitteella `…/hukkaputki/?lang=en`. Uutta baaria lisätessä kirjoita myös
@@ -21,6 +28,7 @@ osoitteella `…/hukkaputki/?lang=en`. Uutta baaria lisätessä kirjoita myös
 - `data.js` – **asemat ja baarit.** Tätä muokkaamalla lisäät paikkoja.
 - `kielet.js` – sivun tekstit suomeksi ja englanniksi sekä tagien käännökset
 - `app.js` – piirtää listan, laskee kävelyajat ja hoitaa suodattimet ja kielen
+- `putki.js` – putkigeneraattori: valinnat, arvonta, tulos ja jakolinkki
 - `kuvat/` – jakokuva (`jakokuva.svg` → `.png`) ja ikonit (`favicon.svg`,
   `apple-touch-icon.png`). Muokkaa SVG:tä ja aja `sh kuvat/tee-png.sh`,
   niin PNG:t päivittyvät (vaatii Chromen).
@@ -32,7 +40,7 @@ osoitteella `…/hukkaputki/?lang=en`. Uutta baaria lisätessä kirjoita myös
 ## Julkaisu
 - Sivu: https://epkoski-cmd.github.io/hukkaputki/ (GitHub Pages, `main`-haara).
   Jokainen push mainiin päivittää sivun noin minuutissa.
-- Kun muutat `style.css`-, `data.js`-, `kielet.js`- tai `app.js`-tiedostoa,
+- Kun muutat `style.css`-, `data.js`-, `kielet.js`-, `app.js`- tai `putki.js`-tiedostoa,
   kasvata `index.html`:ssä niiden perässä olevaa versionumeroa (`?v=2` → `?v=3`).
   Muuten selain voi käyttää vanhaa tiedostoa välimuistista (GitHub Pages
   pitää tiedostoja välimuistissa 10 minuuttia).

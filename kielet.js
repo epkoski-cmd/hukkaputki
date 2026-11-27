@@ -34,13 +34,46 @@ const TEKSTIT = {
     suljettuAukeaa: "Suljettu · aukeaa {n}",
     suljettu: "Suljettu",
     huomenna: "huomenna",
+    // Putkigeneraattori (putki.js)
+    putkiAvaa: "🚇 Pistetään putki päälle",
+    putkiYllata: "🎲 Yllätä minut",
+    putkiMaara: "Montako baaria?",
+    putkiAlku: "Mistä lähdetään?",
+    putkiMistaTahansa: "Mistä tahansa",
+    putkiPaalle: "Putki päälle! 🚇",
+    putkiOtsikko: "Sinun putkesi",
+    putkiBaareja: "{n} baaria",
+    putkiVahemman: "Näillä valinnoilla löytyi vain {n} baaria. Kokeile väljempiä valintoja, jos haluat pidemmän putken.",
+    putkiEiOsumia: "Näillä valinnoilla ei löytynyt yhtään baaria. Kokeile väljempiä valintoja.",
+    putkiSamaAsema: "🚶 Samalla asemalla, kävellen",
+    putkiMetrolla1: "🚇 Metrolla 1 asema →",
+    putkiMetrolla: "🚇 Metrolla {n} asemaa →",
+    putkiUusi: "🎲 Arvo uusi putki",
+    putkiJaa: "📤 Jaa putki",
+    putkiKopioitu: "✅ Linkki kopioitu",
+    putkiMuokkaa: "✏️ Muokkaa valintoja",
+    putkiVesi: "💧 Vinkki: lasi vettä jokaisella pysäkillä pitää putken puhtaana.",
+    putkiKotiin: "🏠 Kotimatka: tarkista viimeiset metrot ja yöbussit",
+    putkiReittiopas: "HSL:n Reittioppaasta →",
+    putkiTuki: `
+      <h3>Jäikö putki päälle?</h3>
+      <p>Jos oma tai läheisen juominen alkaa huolettaa, apua saa nimettömästi ja maksutta.</p>
+      <ul>
+        <li><a href="https://ehyt.fi/paihde-peli-info/paihdeneuvonta/" target="_blank" rel="noopener">Päihdeneuvonta</a>:
+          soita <a href="tel:080090045">0800 900 45</a> (maksuton, ympäri vuorokauden)</li>
+        <li><a href="https://paihdelinkki.fi/testit-ja-laskurit/alkoholi/" target="_blank" rel="noopener">Päihdelinkki</a>:
+          testaa oma alkoholinkäyttösi, chat ja neuvontapalvelu</li>
+        <li>Hätätilanteessa soita 112.</li>
+      </ul>`,
     alatunniste: `
       <p>Kävelyajat ovat arvioita linnuntien perusteella.
         Baarien arvosanat, kuvat ja aukioloajat: Google Maps.</p>
       <p>💎 Piilohelmi = itsenäinen paikka, jossa on jotain erikoista ja joka ei
         ole ensimmäisenä silmien edessä.</p>
       <p>Sijaintitiedot ja kartat: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-tekijät</a>.
-        Asemakuvat: <a href="https://commons.wikimedia.org">Wikimedia Commons</a>, kuvaajat mainittu kuvien alla.</p>`,
+        Asemakuvat: <a href="https://commons.wikimedia.org">Wikimedia Commons</a>, kuvaajat mainittu kuvien alla.</p>
+      <p>Jäikö putki päälle? Maksutonta ja nimetöntä apua:
+        <a href="https://ehyt.fi/paihde-peli-info/paihdeneuvonta/">Päihdeneuvonta</a>, puh. 0800 900 45.</p>`,
   },
 
   en: {
@@ -68,13 +101,46 @@ const TEKSTIT = {
     suljettuAukeaa: "Closed · opens {n}",
     suljettu: "Closed",
     huomenna: "tomorrow",
+    // Tube crawl generator (putki.js)
+    putkiAvaa: "🚇 Start my tube crawl",
+    putkiYllata: "🎲 Surprise me",
+    putkiMaara: "How many bars?",
+    putkiAlku: "Where do we start?",
+    putkiMistaTahansa: "Anywhere",
+    putkiPaalle: "All aboard! 🚇",
+    putkiOtsikko: "Your tube crawl",
+    putkiBaareja: "{n} bars",
+    putkiVahemman: "Only {n} bars matched these choices. Loosen them up for a longer crawl.",
+    putkiEiOsumia: "No bars matched these choices. Try loosening them up.",
+    putkiSamaAsema: "🚶 Same station, on foot",
+    putkiMetrolla1: "🚇 Metro, 1 stop →",
+    putkiMetrolla: "🚇 Metro, {n} stops →",
+    putkiUusi: "🎲 Shuffle again",
+    putkiJaa: "📤 Share crawl",
+    putkiKopioitu: "✅ Link copied",
+    putkiMuokkaa: "✏️ Change choices",
+    putkiVesi: "💧 Tip: a glass of water at every stop keeps the tube running smoothly.",
+    putkiKotiin: "🏠 Getting home: check the last metros and night buses in",
+    putkiReittiopas: "the HSL Journey Planner →",
+    putkiTuki: `
+      <h3>Missed your stop?</h3>
+      <p>If your own or someone else's drinking is starting to worry you, help is free and anonymous.</p>
+      <ul>
+        <li><a href="https://paihdelinkki.fi/en/tests-and-counters/" target="_blank" rel="noopener">AddictionLink</a>:
+          test your drinking (AUDIT) in English</li>
+        <li><a href="https://ehyt.fi/paihde-peli-info/paihdeneuvonta/" target="_blank" rel="noopener">Substance abuse helpline</a>:
+          call <a href="tel:080090045">0800 900 45</a> (free, 24/7, website in Finnish)</li>
+        <li>In an emergency, call 112.</li>
+      </ul>`,
     alatunniste: `
       <p>Walking times are estimates based on straight-line distance.
         Bar ratings, photos and opening hours: Google Maps.</p>
       <p>💎 Hidden gem = an independent place with something special that
         isn't the first thing you see.</p>
       <p>Locations and maps: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
-        Station photos: <a href="https://commons.wikimedia.org">Wikimedia Commons</a>, photographers credited below each photo.</p>`,
+        Station photos: <a href="https://commons.wikimedia.org">Wikimedia Commons</a>, photographers credited below each photo.</p>
+      <p>Missed your stop? Free, anonymous help:
+        <a href="https://paihdelinkki.fi/en/tests-and-counters/">AddictionLink</a> · helpline 0800 900 45.</p>`,
   },
 };
 

@@ -64,6 +64,7 @@ function vaihdaKieli(uusi) {
   paivitaKiinteatTekstit();
   piirraSuodattimet();
   piirraLinja();
+  piirraPutki(); // putki.js
 }
 
 document.querySelectorAll(".lang-switch button").forEach((nappi) => {

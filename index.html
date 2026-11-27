@@ -27,7 +27,7 @@
   <!-- Leaflet: ilmainen karttakirjasto. "integrity" varmistaa, että tiedosto on aito. -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <header>
@@ -42,6 +42,16 @@
   </header>
 
   <main>
+    <!-- Putkigeneraattori. putki.js täyttää tekstit ja tuloksen. -->
+    <section id="putki" class="putki" aria-label="Putkigeneraattori">
+      <div class="putki-aloitus">
+        <button type="button" id="putki-avaa" class="putki-nappi">Pistetään putki päälle</button>
+        <button type="button" id="putki-yllata" class="putki-nappi-toissijainen">🎲 Yllätä minut</button>
+      </div>
+      <div id="putki-valinnat" hidden></div>
+      <div id="putki-tulos"></div>
+    </section>
+
     <!-- Suodatinnapit. app.js täyttää tämän tagien perusteella. -->
     <section class="filters" aria-label="Suodattimet">
       <p class="filters-title" data-teksti="mitaEtsit">Mitä etsit?</p>
@@ -56,13 +66,14 @@
   <footer id="footer"></footer>
 
   <!-- Ensin karttakirjasto ja data, sitten sovelluslogiikka.
-       ?v=4 on versionumero: kasvata sitä aina, kun muutat tiedostoja, niin
+       ?v=5 on versionumero: kasvata sitä aina, kun muutat tiedostoja, niin
        selain hakee uudet versiot eikä käytä vanhoja välimuistista. -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="data.js?v=4"></script>
-  <script src="kielet.js?v=4"></script>
-  <script src="app.js?v=4"></script>
+  <script src="data.js?v=5"></script>
+  <script src="kielet.js?v=5"></script>
+  <script src="app.js?v=5"></script>
+  <script src="putki.js?v=5"></script>
 
   <!-- GoatCounter: yksityisyyttä kunnioittava kävijätilasto, ei evästeitä.
        Ei laske käyntejä localhostista. https://www.goatcounter.com -->

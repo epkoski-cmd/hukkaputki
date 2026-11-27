@@ -13,6 +13,9 @@
 //   2) jotain erikoista (oma panimo, sauna, lautapelit, opiskelijavetoinen…)
 //   3) ei ole ensimmäisenä silmien edessä (ei kauppakeskuksen pääkäytävällä)
 //   4) tiedot on tarkistettu
+// - "id": baarin pysyvä tunniste (pienillä kirjaimilla, ei ääkkösiä).
+//   Jaetut putkilinkit (?putki=…) käyttävät sitä, joten ÄLÄ muuta olemassa
+//   olevaa id:tä. Uudelle baarille keksitään uusi, ainutlaatuinen id.
 // - "placeId": paikan tunniste Googlessa. Sivu hakee sen avulla arvosanan
 //   ja kuvan suoraan Googlelta. Googlen ehtojen mukaan omiin tiedostoihin
 //   saa tallentaa vain tämän tunnisteen, ei arvosanoja eikä kuvia.
@@ -148,6 +151,7 @@ const ASEMAT = [
 const BAARIT = [
   // --- Lauttasaari ---
   {
+    id: "bar-pikku-katti",
     nimi: "Bar Pikku Katti",
     asema: "lauttasaari",
     osoite: "Lauttasaarentie 32, Helsinki",
@@ -159,6 +163,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "sidewalk",
     nimi: "Sidewalk",
     asema: "lauttasaari",
     osoite: "Lauttasaarentie 25, Helsinki",
@@ -170,6 +175,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "kaunis-kampela",
     nimi: "Kaunis Kampela",
     asema: "lauttasaari",
     osoite: "Lauttasaarentie 10, Helsinki",
@@ -183,6 +189,7 @@ const BAARIT = [
     piilohelmiEn: "The island's own living room: a wide beer selection far from the city-centre buzz.",
   },
   {
+    id: "bar-52",
     nimi: "BAR 52",
     asema: "lauttasaari",
     osoite: "Heikkiläntie 2, Helsinki",
@@ -202,6 +209,7 @@ const BAARIT = [
 
   // --- Aalto-yliopisto (Otaniemi) ---
   {
+    id: "fat-lizard-otaniemi",
     nimi: "Fat Lizard Otaniemi",
     asema: "aalto",
     osoite: "Tietotie 1, Espoo",
@@ -213,6 +221,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "masis-brewery-taproom",
     nimi: "Masis Brewery Taproom",
     asema: "aalto",
     osoite: "Tietotie 2, Espoo",
@@ -226,6 +235,7 @@ const BAARIT = [
     piilohelmiEn: "A microbrewery's own taproom hidden in a courtyard – open only four days a week.",
   },
   {
+    id: "kipsari",
     nimi: "Kipsari",
     asema: "aalto",
     osoite: "Otaniementie 14, Espoo",
@@ -239,6 +249,7 @@ const BAARIT = [
     piilohelmiEn: "A bar run by the students themselves, right in the middle of campus.",
   },
   {
+    id: "bar-otapas",
     nimi: "Bar Otapas",
     asema: "aalto",
     osoite: "Otakaari 27 (A Blanc), Espoo",
@@ -250,6 +261,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "taproom-d20",
     nimi: "Taproom d20",
     asema: "aalto",
     osoite: "Otakaari 27 (A Blanc), Espoo",
@@ -263,6 +275,7 @@ const BAARIT = [
     piilohelmiEn: "Board games and beer in the same place.",
   },
   {
+    id: "vesiheina",
     nimi: "Vesiheinä",
     asema: "aalto",
     osoite: "Otakaari 27 (A Blanc), Espoo",
@@ -274,6 +287,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "bistro-ranta",
     nimi: "Bistro Ranta",
     asema: "aalto",
     osoite: "Otaranta 2, Espoo",
@@ -286,6 +300,7 @@ const BAARIT = [
   },
 
   {
+    id: "fat-lizard-taproom",
     nimi: "Fat Lizard Taproom",
     asema: "aalto",
     osoite: "Betonimiehenkuja 8, Espoo",
@@ -301,6 +316,7 @@ const BAARIT = [
 
   // --- Tapiola ---
   {
+    id: "gallows-bird-tapiola",
     nimi: "Gallows Bird Tapiola",
     asema: "tapiola",
     osoite: "Länsituuli 5, Espoo",
@@ -312,6 +328,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "watson-pub-tapiola",
     nimi: "Watson Pub Tapiola",
     asema: "tapiola",
     osoite: "Pohjantie 3, Espoo",
@@ -325,6 +342,7 @@ const BAARIT = [
   // Garden City Cafe (Kauppamiehentie 1, placeId ChIJ_X4r-Jf1jUYRfh9_4h_2Lc0) jätetty
   // pois 27.11.2026: Facebookista ei selviä, onko säännöllisesti auki. Käy paikan päällä.
   {
+    id: "oravanhanta",
     nimi: "Oravanhäntä",
     asema: "tapiola",
     osoite: "Oravannahkatori 3, Espoo",
@@ -338,6 +356,7 @@ const BAARIT = [
 
   // --- Urheilupuisto ---
   {
+    id: "tauko-baari",
     nimi: "Tauko Baari",
     asema: "urheilupuisto",
     osoite: "Jousenpuistonkatu 2, Espoo",
@@ -351,6 +370,7 @@ const BAARIT = [
 
   // --- Niittykumpu ---
   {
+    id: "bodom-bar-sauna",
     nimi: "Bodom Bar & Sauna",
     asema: "niittykumpu",
     osoite: "Merituulentie 35, Espoo",
@@ -366,6 +386,7 @@ const BAARIT = [
 
   // --- Matinkylä ---
   {
+    id: "freja-rooftop",
     nimi: "Freja Rooftop",
     asema: "matinkyla",
     osoite: "Suomenlahdentie 7, Espoo",
@@ -377,6 +398,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "o-learys-iso-omena",
     nimi: "O'Learys Iso Omena",
     asema: "matinkyla",
     osoite: "Piispansilta 11 (Iso Omena), Espoo",
@@ -388,6 +410,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "mega-bistro-night-club",
     nimi: "Mega Bistro & Night Club",
     asema: "matinkyla",
     osoite: "Piispansilta 11, Espoo",
@@ -408,6 +431,7 @@ const BAARIT = [
 
   // --- Soukka ---
   {
+    id: "bestis-karaoke-nightlife",
     nimi: "Bestis Karaoke & Nightlife",
     asema: "soukka",
     osoite: "Yläkartanontie 28, Espoo",
@@ -419,6 +443,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "public-house-wilperi",
     nimi: "Public House Wilperi",
     asema: "soukka",
     osoite: "Yläkartanontie 28, Espoo",
@@ -430,6 +455,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "mona-lisa-bar-lounge-club",
     nimi: "Mona Lisa Bar & Lounge Club",
     asema: "soukka",
     osoite: "Yläkaupinkuja 2, Espoo",
@@ -443,6 +469,7 @@ const BAARIT = [
 
   // --- Espoonlahti ---
   {
+    id: "satama-beerhouse",
     nimi: "Satama Beerhouse",
     asema: "espoonlahti",
     osoite: "Espoonlahdenkatu 8 (Lippulaiva), Espoo",
@@ -454,6 +481,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "bar-casanova",
     nimi: "Bar Casanova",
     asema: "espoonlahti",
     osoite: "Maininkitie 7, Espoo",
@@ -467,6 +495,7 @@ const BAARIT = [
 
   // --- Kivenlahti ---
   {
+    id: "vaappuva-ankka-kivenlahti",
     nimi: "Vaappuva Ankka Kivenlahti",
     asema: "kivenlahti",
     osoite: "Merivalkama 2, Espoo",
@@ -478,6 +507,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "pub-nousuvesi",
     nimi: "Pub Nousuvesi",
     asema: "kivenlahti",
     osoite: "Merenkäynti 3, Espoo",
@@ -489,6 +519,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "tyrsky-pub",
     nimi: "Tyrsky Pub",
     asema: "kivenlahti",
     osoite: "Merenkäynti, Espoo",
@@ -500,6 +531,7 @@ const BAARIT = [
     tarkistettu: true,
   },
   {
+    id: "se-toinen-vesi",
     nimi: "Se Toinen Vesi",
     asema: "kivenlahti",
     osoite: "Merenkäynti, Espoo",
